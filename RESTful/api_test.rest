@@ -1,0 +1,52 @@
+//post user's request into Room Table
+###
+POST http://localhost:3001/rooms/ingest
+//store single review into DB
+###
+POST http://localhost:3001/reviews/ingest HTTP/1.1
+Content-Type: application/json
+
+{
+    "listing_id": "20083",
+    "id": "31750",
+    "date": "2010-03-28",
+    "reviewer_id": "76930",
+    "reviewer_name": "Floor",
+    "comments": "We stayed at Lovisa's place during 4 days in March, and had a really good time. It is located in the nicest, most trendy area of Stockholm, close to restaurants and shops, but really nice and quiet next to a park. The appartement is clean and has all you need. I would recommend it without any doubt! "
+}
+//store single room into DB
+###
+POST http://localhost:3001/rooms/ingest HTTP/1.1
+{
+    "id": 20083,
+    "name": "Unique in Södermalm SOFO Stockholm",
+    "host_id": 75962,
+    "host_name": "Lovisa",
+    "neighbourhood_group": "",
+    "neighbourhood": "Södermalms",
+    "latitude": 59.30643,
+    "longitude": 18.08785,
+    "room_type": "Entire home/apt",
+    "price": 987,
+    "minimum_nights": 4,
+    "number_of_reviews": 12,
+    "last_review": "2014-09-01",
+    "reviews_per_month": 0.09,
+    "calculated_host_listings_count": 1,
+    "availability_365": 364
+}
+
+//find review by listing id
+###
+GET http://localhost:3001/reviews/filter/listingId/20083
+
+//find records by id
+GET http://localhost:3001/rooms/283446
+###
+GET http://localhost:3001/rooms/filter/roomType/"Private room"
+###
+//filter rooms by minimum nights
+GET http://localhost:3001/rooms/filter/minimumNights/50
+
+
+
