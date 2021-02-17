@@ -19,7 +19,9 @@ const reviewRoute = require('./Routes/reviewsRoute');
 const dbConfig = {
   autoIndex: false,
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 };
 
 mongoose.connect(process.env.DB_CONNECT, dbConfig, () => {
@@ -36,7 +38,9 @@ app.use('/reviews', reviewRoute);
 app.get('/', (request, response) => {
   response.send("connected!");
 })
-const PORT = 3001;
+
+const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
