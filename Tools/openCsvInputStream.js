@@ -16,7 +16,7 @@ const openCsvInputStream = (inputFilePath) => {
     skipEmptyLines: true,
 
     chunk: (results) => {
-      console.log("chunk", results.data.length);
+      console.log("chunk input", results.data.length);
   
       csvInputStream.push(results.data); // Push results as they are streamed from the file.                
       

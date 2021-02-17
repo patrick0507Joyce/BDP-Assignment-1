@@ -8,8 +8,8 @@ const storeDataset = require('./Tools/storeDataset');
 dotenv.config();
 
 //tools for parsing args and store into DB
-const [datasetPath, datasetName] = parseArgs();
-storeDataset(datasetPath, datasetName);
+//const [datasetPath, datasetName] = parseArgs();
+//storeDataset(datasetPath, datasetName);
 
 //Import Routes
 const roomRoute = require('./Routes/roomsRoute');
@@ -39,7 +39,7 @@ app.get('/', (request, response) => {
   response.send("connected!");
 })
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

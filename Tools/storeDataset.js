@@ -10,7 +10,7 @@ const dbConfig = {
 };
 
 const openDataBase = (dbName, collectionName) => {
-  return MongoClient.connect(`mongodb+srv://admin:rootbdp2021@bdf-a1-cluster1.padsg.mongodb.net/${dbName}?retryWrites=true&w=majority`, dbConfig).then((client) => {
+  return MongoClient.connect(`mongodb://root:bdp2021@104.198.242.244:27017/admin`, dbConfig).then((client) => {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
     return {
@@ -50,5 +50,5 @@ const storeDataset = (inputFilePath, collectionName) => {
     });
 };
 
-storeDataset('./Data/hosts-stockholm.csv', 'rooms');
+storeDataset('./Data/calendar-stockholm.csv', 'calendars');
 //module.exports = storeDataset;
