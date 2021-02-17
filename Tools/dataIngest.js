@@ -1,6 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
-const openCsvInputStream = require("./openCsvInputStream");
-const openMongodbOutputStream = require("./openMongodbOutputStream");
+const openCsvInputStream = require("./streamToolKits/openCsvInputStream");
+const openMongodbOutputStream = require("./streamToolKits/openMongodbOutputStream");
 
 const dbName = "airbnb";
 
@@ -10,7 +10,7 @@ const dbConfig = {
 };
 
 const openDataBase = (dbName, collectionName) => {
-  return MongoClient.connect(`mongodb://root:bdp2021@104.198.242.244:27017/admin`, dbConfig).then((client) => {
+  return MongoClient.connect(process.env.DB_CONNECT, dbConfig).then((client) => {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
     return {
@@ -50,5 +50,4 @@ const storeDataset = (inputFilePath, collectionName) => {
     });
 };
 
-storeDataset('./Data/calendar-stockholm.csv', 'calendars');
-//module.exports = storeDataset;
+module.exports = storeDataset;

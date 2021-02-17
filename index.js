@@ -2,14 +2,9 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const parseArgs = require('./Tools/parseArgs');
-const storeDataset = require('./Tools/storeDataset');
+
 //Import env
 dotenv.config();
-
-//tools for parsing args and store into DB
-//const [datasetPath, datasetName] = parseArgs();
-//storeDataset(datasetPath, datasetName);
 
 //Import Routes
 const roomRoute = require('./Routes/roomsRoute');
