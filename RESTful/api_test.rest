@@ -42,11 +42,7 @@ GET http://localhost:3001/reviews/filter/listingId/20083
 
 //find records by id
 GET http://localhost:3001/rooms/283446
-###
-GET http://localhost:3001/rooms/filter/roomType/"Private room"
-###
-//filter rooms by minimum nights
-GET http://localhost:3001/rooms/filter/minimumNights/50
+
 
 
 

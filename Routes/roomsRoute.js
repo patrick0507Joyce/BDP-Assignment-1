@@ -1,27 +1,66 @@
 const router = require("express").Router();
-const Room = require("../Model/Room");
+const openDataBase = require("../Tools/dataBaseToolKits/openDataBase");
 
-router.post('/ingest', (request, response) => {
+const collectionName = "rooms";
+
+router.post("/ingest", (request, response) => {
   console.log(request.body);
-  Room.create(request.body);
-})
-
-router.get("/:id", async (request, response) => {
-  console.log(request.params.id);
-  const hostRecord = await Room.find({ id: request.params.id }).exec();
-  console.log(hostRecord);
+  openDataBase(process.env.DB_NAME, collectionName).then((db) => {
+    db.collection
+      .insertOne(request.body)
+      .then(() => {
+        db.close(); // Close database when done.
+        response.send("success");
+      });
+  });
 });
 
-router.get('/filter/roomType/:roomType',async (request, response) => {
-  console.log(request.params.roomType);
-  const roomRecords = await Room.find({ room_type: request.params.roomType }).exec();
-  console.log(roomRecords);
-})
+router.get("/:id", async (request, response) => {
+  let result = null;
+  openDataBase(process.env.DB_NAME, collectionName).then((db) => {
+    const query = {
+      // Define our database query
+      id: Number(request.params.id),
+    };
 
-router.get('/filter/minimumNights/:minimumNights',async (request, response) => {
-  const roomRecords = await Room.find({ minimum_nights: {$lt: request.params.minimumNights} }).exec();
-  console.log(roomRecords.length);
-})
+    db.collection
+      .find(query) // Retreive records with id
+      .toArray()
+      .then((data) => {
+        console.log(data);
+        result = data;
+      })
+      .then(() => {
+        db.close(); // Close database when done.
+        response.json(result);
+      });
+  });
+});
 
+router.get(
+  "/filter/minimumNights/:minimumNights",
+  async (request, response) => {
+    let result = null;
+    console.log(request.params.minimumNights);
+    openDataBase(process.env.DB_NAME, collectionName).then((db) => {
+      const query = {
+        // Define our database query
+        minimum_nights: { $gt: Number(request.params.minimumNights) },
+      };
+
+      db.collection
+        .find(query) // Retreive records with id
+        .toArray()
+        .then((data) => {
+          console.log(data.length);
+          result = data;
+        })
+        .then(() => {
+          db.close(); // Close database when done.
+          response.json(result);
+        });
+    });
+  }
+);
 
 module.exports = router;
