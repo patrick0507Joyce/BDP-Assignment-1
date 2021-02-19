@@ -68,8 +68,10 @@ As for the consistency options, there are two options in my mind:
 -   **Eventual Consistency (BASE):** BASE means that once data is written, it will eventually appear for reading.
 
 #### Given your deployment environment, show the performance (response time and failure) of the tests for 1,5, 10, .., n of concurrent mysimbdp-dataingest writing data into mysimbdp-coredms with different speeds/velocities. Indicate any performance differences due to the choice of consistency options
+Although Node.js is a single-thread language, we could simulated the multiprocessing situation by running several Node.js to do the data ingest together. More details can be found in mysimplebdp_parallel_dataingest.js script. As we can see from the graph below, the dataingest runs properly and the performance is not affected a lot. 
 ![Concurrency Performance](figures/Graph4.jpg)
 #### Observing the performance and failure problems when you push a lot of data into mysimbdp-coredms (you do not need to worry about duplicated data in mysimbdp), propose the change of your deployment to avoid such problems (or explain why you do not have any problem with your deployment)
+The potential failure may happen when multiple users ingest huge CSV files together. While since I already design the stream processing module, It's unlikely that we may face the fault. we may see that the performance decrease a lot when a lot of users ingest data together, then we have to do the horizontal or vertical sharding.
 
 # Part 3 Extension
 #### Using your mysimdbp-coredms, a single tenant can create many different databases/datasets. Assume that you want to support the tenant to manage metadata about the databases/datasets, what would be your solution?

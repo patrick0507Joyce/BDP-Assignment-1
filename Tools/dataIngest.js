@@ -15,7 +15,7 @@ const streamData = (inputFilePath, dbCollectionName) => {
   });
 };
 
-const storeDataset = (inputFilePath, collectionName) => {
+const storeDataset = (inputFilePath, collectionName, callback) => {
   openDataBase(process.env.DB_NAME, collectionName)
     .then(client => {
       return streamData(inputFilePath, client.collection).then(() =>
@@ -24,9 +24,11 @@ const storeDataset = (inputFilePath, collectionName) => {
     })
     .then(() => {
       console.log("store into db successfully");
+      callback();
     })
     .catch((err) => {
       console.log("error info", err);
+      callback(err);
     });
 };
 
